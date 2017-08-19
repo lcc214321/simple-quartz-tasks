@@ -10,6 +10,32 @@
 	<name>tasks</name>
 	<url>http://maven.apache.org</url>
 
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<scm>
+		<url>https://github.com/zhangyinhao1234/simple-quartz-tasks.git</url>
+		<connection>https://github.com/zhangyinhao1234/simple-quartz-tasks.git</connection>
+	</scm>
+
+	<developers>
+		<developer>
+			<name>zhangyinhao</name>
+			<email>zhangyinhao1234@163.com</email>
+		</developer>
+	</developers>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
