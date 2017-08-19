@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	<context:component-scan base-package="com.binpo" />
+	
+	
+	<!-- 执行任务使用的锁 -->
+	<bean id="lock" class="com.binpo.tasks.lock.ReidsTaskRunLock">
+		<constructor-arg name="host" value="127.0.0.1"/>
+		<constructor-arg name="port" value="6379"/>
+		<constructor-arg name="password" value=""/>
+	</bean>
+	<!-- 订阅频道的类 -->
+	<bean id="jobManageAction" class="com.binpo.tasks.JobManagePubSub">
+		<property name="channelName" value="jobManageAction"></property>
+	</bean>
+	<!--发布订阅   -->
+	<bean id="subscriberCenter" class="com.binpo.tasks.pubsub.SubscriberCenterImpl">
+		<property name="pubSubHost" value="127.0.0.1" ></property>
+		<property name="pubSubPort" value="6379" ></property>
+		<property name="pubSubPassword" value=""/>
+		<property name="jedisPubSubs">
+			<list>
+				<ref bean="jobManageAction"/>
+			</list>
+		</property>
+	</bean>
+	<!-- 配置任务的bean 写在配置文件里面方便管理  demo -->
+	<bean id="testTran" class="com.binpo.tasks.jobs.example.TestTran"/>
+	
+	<bean id="testTran2" class="com.binpo.tasks.jobs.example.TestTran2"/>
+	
+	<!-- 配置工作任务  -->
+	
+	
+	
+	
+	
+	
+</beans>
