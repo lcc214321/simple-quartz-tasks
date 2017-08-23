@@ -11,3 +11,12 @@
   * 添加任务：在spring的配置文件中添加需要进行自动调度的任务，并且继承 AbstractJob 对抽象方法进行实现
   * redis的订阅发布请参考测试例子中，有详细的配置
   * 完成以上工作就可以开始启动你的项目了
+
+# 依赖jar包
+```xml
+<dependency>
+    <groupId>com.github.zhangyinhao1234.plugin</groupId>
+    <artifactId>tasks-plugin</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
