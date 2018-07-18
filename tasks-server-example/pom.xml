@@ -23,11 +23,11 @@
 	<dependencies>
 
 
-		<dependency>
-			<groupId>org.apache.velocity</groupId>
-			<artifactId>velocity</artifactId>
-			<version>${velocity.version}</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.apache.velocity</groupId> -->
+<!-- 			<artifactId>velocity</artifactId> -->
+<!-- 			<version>${velocity.version}</version> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
@@ -91,10 +91,10 @@
 
 
 		<dependency>
-			<groupId>com.binpo.plugin</groupId>
-			<artifactId>tasks-plugin</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
-		</dependency>
+    <groupId>com.github.zhangyinhao1234.plugin</groupId>
+    <artifactId>tasks-plugin</artifactId>
+    <version>1.0.0</version>
+</dependency>
 		
 		<dependency>
 			<groupId>javax.servlet</groupId>

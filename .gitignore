@@ -4,3 +4,9 @@
 /tasks-server-example/.classpath
 /tasks-server-example/.project
 /tasks-server-example/.settings
+/tasks/.idea
+/tasks-plugin-config/*.classpath
+/tasks-plugin-config/*.project
+/tasks-plugin-config/.settings
+/tasks-server-example/.idea/artifacts
+/tasks-server-example/.idea

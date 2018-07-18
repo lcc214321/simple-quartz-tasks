@@ -29,13 +29,11 @@ public class ScheduleLoad implements ScheduleJobsOperate{
 	@Autowired
 	private NamedParameterJdbcTemplate jdbc;
 
-	@Override
 	public ScheduleJob getScheduleJob(Long jobId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public List<ScheduleJob> loadJobs() {
 		List<ScheduleJob> scheduleJobs=new ArrayList<ScheduleJob>();
 		
@@ -60,49 +58,41 @@ public class ScheduleLoad implements ScheduleJobsOperate{
 		return scheduleJobs;
 	}
 
-	@Override
 	public void saveSuccessLog(Long jobId, ExecuteParams runParams, String log) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void saveErrorLog(Long jobId, ExecuteParams runParams, String log) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void sendSuccessEmail(Long jobId, ExecuteParams runParams, String log) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void sendErrorEmail(Long jobId, ExecuteParams runParams, String log) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void updateJobRunTime(Long jobId, Date runTime, Date nextRunTime) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void updateCronExpression(Long jobId, String cronExpression) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void saveAllJobs(List<ScheduleJob> scheduleJobs) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void saveAllRuningJobs(List<ScheduleJob> scheduleJobs) {
 		// TODO Auto-generated method stub
 		
