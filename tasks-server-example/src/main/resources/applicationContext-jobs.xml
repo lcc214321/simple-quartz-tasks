@@ -55,6 +55,8 @@
 			</list>
 		</property>
 	</bean>
+	
+	
 	<!-- 配置任务的bean 写在配置文件里面方便管理  demo -->
 	<bean id="pushjob" class="com.binpo.tasks.jobs.PushExample"/>
 	

@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.binpo.tasks.JobManagePubSub;
+import com.binpo.tasks.lock.ReidsTaskRunLock;
+import com.binpo.tasks.lock.TaskRunLock;
 import com.binpo.tasks.pubsub.SubscriberCenterImpl;
 
 /**
@@ -27,62 +29,52 @@ public class TaskInitConfig {
     /**
      * 数据库地址
      */
-    @Value("${spring.datasource.url}")
+    @Value("${task.datasource.url}")
     private String url;
     /**
      * 数据库账号
      */
-    @Value("${spring.datasource.username}")
+    @Value("${task.datasource.username}")
     private String username;
     /**
      * 数据库密码
      */
-    @Value("${spring.datasource.password}")
+    @Value("${task.datasource.password}")
     private String password;
     /**
      * 使用的数据库驱动
      */
-    @Value("${spring.datasource.driverClassName}")
+    @Value("${task.datasource.driverClassName}")
     private String driverClassName;
     /**
      * 最大活动数量
      */
-    @Value("${spring.datasource.maxActive:10}")
+    @Value("${task.datasource.maxActive:10}")
     private String maxActive;
-
-   
-    
-    
 
     /**
      * 初始值
      */
-    @Value("${spring.datasource.initialSize:1}")
+    @Value("${task.datasource.initialSize:1}")
     private String initialSize;
-    
-    
+
     /**
      * 消息订阅：redis的地址
      */
     @Value("${task.pubsub.redis.host:127.0.0.1}")
     private String pubSubHost;
-    
-    
-    
 
     /**
      * 消息订阅，redis的端口
      */
     @Value("${task.pubsub.redis.port:6379}")
     private String pubSubPort;
-    
 
     /**
      * 消息订阅，redis的密码
      */
     @Value("${task.pubsub.redis.pw:}")
     private String pubSubPassword;
-    
 
     @Bean
     public DruidDataSource dataSource() throws SQLException {
@@ -106,7 +98,7 @@ public class TaskInitConfig {
     public NamedParameterJdbcTemplate namedParameterJdbcTemplate(DruidDataSource dataSource) {
         return new NamedParameterJdbcTemplate(dataSource);
     }
-    
+
     /**
      * 
      * 默认的任务管理器，订阅了默认的频道 jobManageAction
@@ -118,8 +110,9 @@ public class TaskInitConfig {
         JobManagePubSub jobManagePubSub = new JobManagePubSub();
         jobManagePubSub.setChannelName("jobManageAction");
         return jobManagePubSub;
-        
+
     }
+
     /**
      * 
      * 初始化订阅中心
@@ -131,10 +124,15 @@ public class TaskInitConfig {
         SubscriberCenterImpl subscriberCenter = new SubscriberCenterImpl();
         subscriberCenter.setPubSubHost(pubSubHost);
         subscriberCenter.setPubSubPort(Integer.valueOf(pubSubPort));
-        if(StringUtils.isNotBlank(pubSubPassword)) {
+        if (StringUtils.isNotBlank(pubSubPassword)) {
             subscriberCenter.setPubSubPassword(pubSubPassword);
         }
         subscriberCenter.setJedisPubSubs(Stream.of(jobManagePubSub()).collect(Collectors.toList()));
         return subscriberCenter;
+    }
+
+    @Bean
+    public TaskRunLock lock() {
+        return new ReidsTaskRunLock(pubSubHost, pubSubPort, pubSubPassword);
     }
 }
