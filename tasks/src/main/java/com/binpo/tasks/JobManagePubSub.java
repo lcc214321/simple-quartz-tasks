@@ -36,6 +36,7 @@ public class JobManagePubSub extends Subscriber {
      * 上次心跳检测的uuid
      */
     private String lastRunUuid = "";
+
     public String getLastRunUuid() {
         return lastRunUuid;
     }

@@ -10,3 +10,6 @@
 /tasks-plugin-config/.settings
 /tasks-server-example/.idea/artifacts
 /tasks-server-example/.idea
+/tasks-server-springboot/.settings
+/tasks-server-springboot/*.classpath
+/tasks-server-springboot/*.project
