@@ -20,3 +20,7 @@
     <version>1.0.0</version>
 </dependency>
 ```
+
+# Spring Boot快速集成
+
+切换到分支2.0 查看进行快速集成
