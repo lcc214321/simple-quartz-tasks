@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.binpo.tasks.JobManagePubSub;
+import com.binpo.tasks.ScheduleJobsOperate;
+import com.binpo.tasks.TaskManager;
 import com.binpo.tasks.lock.ReidsTaskRunLock;
 import com.binpo.tasks.lock.TaskRunLock;
 import com.binpo.tasks.pubsub.SubscriberCenterImpl;
@@ -29,22 +31,22 @@ public class TaskInitConfig {
     /**
      * 数据库地址
      */
-    @Value("${task.datasource.url}")
+    @Value("${task.datasource.url:}")
     private String url;
     /**
      * 数据库账号
      */
-    @Value("${task.datasource.username}")
+    @Value("${task.datasource.username:}")
     private String username;
     /**
      * 数据库密码
      */
-    @Value("${task.datasource.password}")
+    @Value("${task.datasource.password:}")
     private String password;
     /**
      * 使用的数据库驱动
      */
-    @Value("${task.datasource.driverClassName}")
+    @Value("${task.datasource.driverClassName:}")
     private String driverClassName;
     /**
      * 最大活动数量
@@ -78,6 +80,8 @@ public class TaskInitConfig {
 
     @Bean
     public DruidDataSource dataSource() throws SQLException {
+        if (StringUtils.isBlank(url))
+            return null;
         DruidDataSource dataSource = new DruidDataSource();
         dataSource.setDriverClassName(driverClassName);
         dataSource.setUrl(url);
@@ -91,11 +95,16 @@ public class TaskInitConfig {
 
     @Bean
     public JdbcTemplate jdbcTemplate(DruidDataSource dataSource) {
+        if (dataSource == null)
+            return null;
         return new JdbcTemplate(dataSource);
     }
 
     @Bean
     public NamedParameterJdbcTemplate namedParameterJdbcTemplate(DruidDataSource dataSource) {
+        if (dataSource == null) {
+            return null;
+        }
         return new NamedParameterJdbcTemplate(dataSource);
     }
 
@@ -106,11 +115,14 @@ public class TaskInitConfig {
      * @return
      */
     @Bean
-    public JobManagePubSub jobManagePubSub() {
+    public JobManagePubSub jobManagePubSub(TaskManager taskManager, ScheduleJobsOperate scheduleJobsOperate,
+            TaskRunLock lock) {
         JobManagePubSub jobManagePubSub = new JobManagePubSub();
+        jobManagePubSub.setLock(lock);
+        jobManagePubSub.setTaskManager(taskManager);
+        jobManagePubSub.setScheduleJobsOperate(scheduleJobsOperate);
         jobManagePubSub.setChannelName("jobManageAction");
         return jobManagePubSub;
-
     }
 
     /**
@@ -120,14 +132,14 @@ public class TaskInitConfig {
      * @return
      */
     @Bean
-    public SubscriberCenterImpl subscriberCenter() {
+    public SubscriberCenterImpl subscriberCenter(JobManagePubSub jobManagePubSub) {
         SubscriberCenterImpl subscriberCenter = new SubscriberCenterImpl();
         subscriberCenter.setPubSubHost(pubSubHost);
         subscriberCenter.setPubSubPort(Integer.valueOf(pubSubPort));
         if (StringUtils.isNotBlank(pubSubPassword)) {
             subscriberCenter.setPubSubPassword(pubSubPassword);
         }
-        subscriberCenter.setJedisPubSubs(Stream.of(jobManagePubSub()).collect(Collectors.toList()));
+        subscriberCenter.setJedisPubSubs(Stream.of(jobManagePubSub).collect(Collectors.toList()));
         return subscriberCenter;
     }
 

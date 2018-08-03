@@ -243,4 +243,17 @@ public class JobManagePubSub extends Subscriber {
         logger.info("onPSubscribe:pattern:" + pattern + "        subscribedChannels:" + subscribedChannels);
     }
 
+    public void setTaskManager(TaskManager taskManager) {
+        this.taskManager = taskManager;
+    }
+
+    public void setScheduleJobsOperate(ScheduleJobsOperate scheduleJobsOperate) {
+        this.scheduleJobsOperate = scheduleJobsOperate;
+    }
+
+    public void setLock(TaskRunLock lock) {
+        this.lock = lock;
+    }
+
+    
 }

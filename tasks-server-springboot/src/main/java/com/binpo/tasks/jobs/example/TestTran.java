@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import com.binpo.tasks.AbstractJob;
 import com.binpo.tasks.model.ExecuteParams;
@@ -13,6 +14,7 @@ import com.binpo.tasks.model.ExecuteParams;
  *
  * @author zhang 2017年8月19日 下午1:35:23
  */
+@Component
 public class TestTran extends AbstractJob{
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	public void test(ExecuteParams executeParams){
